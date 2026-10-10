@@ -16,6 +16,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  contents: write
 
 concurrency:
   group: mrstore-pages
@@ -61,15 +62,22 @@ jobs:
           assert len({a['id'] for a in i['apps']}) == i['app_count']
           print('Valid storefront with', i['app_count'], 'entries; status:', r['status'])
           PY
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-      - name: Upload static website
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: public
-      - name: Publish to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Update published branch snapshot
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout main
+          cp public/index.json index.json
+          cp public/release-status.json release-status.json
+          git add index.json release-status.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(pages): synchronize published application catalog [skip ci]"
+            git push origin HEAD:main
+          fi
       - name: Smoke test HTTPS homepage after deployment
         shell: bash
         run: |
