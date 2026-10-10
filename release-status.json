@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "status": "editorial_pilot_unverified",
+  "approved": [],
+  "approved_count": 0,
+  "candidates": [
+    "homeassistant",
+    "jellyfin",
+    "immich",
+    "nextcloud",
+    "qbittorrent",
+    "vaultwarden"
+  ],
+  "candidate_count": 6,
+  "notice": "Seleção editorial piloto, sem certificação de instalação ou segurança. A lista de aprovação fica vazia até existir um relatório de release auditado e coerente na origem.",
+  "source": "https://github.com/mrpiracy94/MrStore"
+}
