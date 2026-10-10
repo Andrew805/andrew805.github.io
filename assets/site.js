@@ -31,7 +31,7 @@
     catch (_) { /* Private mode may reject storage. Favorites still work this session. */ }
   }
   function safePath(value, extension) {
-    if (typeof value !== "string" || !value.startsWith("/apps/") ||
+    if (typeof value === "string" && /^https:\/\/cdn\.jsdelivr\.net\/gh\/walkxcode\/dashboard-icons\/(?:png|svg)\/[a-zA-Z0-9._-]+\.(?:png|svg)$/.test(value) && !extension) return value;\n    if (typeof value !== "string" || !value.startsWith("/apps/") ||
         value.includes("..") || value.includes("\\") || value.includes("?") ||
         value.includes("#") || !/^\/apps\/[a-z0-9._-]+\/[a-zA-Z0-9._/-]+$/.test(value)) return null;
     if (extension && !value.toLowerCase().endsWith(extension)) return null;
