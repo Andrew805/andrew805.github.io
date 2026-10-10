@@ -80,9 +80,28 @@ def build_selection(featured, published, source_release):
 
     lookup = {a["id"]: a for a in published["apps"]}
     available = [lookup.get(PREFIX + slug) for slug in slugs]
-    # Publication may lag behind the editorial shortlist. Show only real entries.\n    available = [app for app in available if app is not None]\n    if not available:\n        raise ValueError("No editorial applications found in published upstream index")
+    # The main catalog can be ahead of gh-pages. Confirm each missing app
+    # exists in the upstream Git tree before showing an editorial-only entry.
+    if any(app is None for app in available):
+        tree = get_json("https://api.github.com/repos/mrpiracy94/MrStore/git/trees/main?recursive=1")
+        paths = {entry.get("path") for entry in tree.get("tree", []) if entry.get("type") == "blob"}
+        for i, slug in enumerate(slugs):
+            if available[i] is not None:
+                continue
+            if "Apps/" + slug + "/docker-compose.yml" not in paths:
+                raise ValueError("Missing upstream application manifest: " + slug)
+            available[i] = {
+                "id": PREFIX + slug,
+                "title": slug.replace("-", " ").replace("_", " ").title(),
+                "tagline": "Aplicação disponível no repositório MrStore; publicação ZimaOS pendente.",
+                "category": "Others", "categories": ["others"],
+                "architectures": [], "version": "Não verificada",
+                "developer": "Comunidade", "editorial_only": True,
+            }
+    if not available:
+        raise ValueError("No editorial applications found upstream")
 
-    verified = valid_upstream_release(source_release, published)
+    verified = valid_upstream_release(source_release, published) and not any(\n        app.get("editorial_only") for app in available)
     if verified:
         # Published approval is authoritative; never promote an absent slug.
         released = {PREFIX + slug for slug in source_release["approved"]}
