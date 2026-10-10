@@ -523,3 +523,6 @@ body{background:#10151d;overflow-x:hidden}
 .installation-technical a{color:#ffbc80;text-decoration:underline;text-underline-offset:3px;font-weight:800}
 .installation-technical a:hover{color:#ffe0b6}
 @media(max-width:520px){.installation-technical{font-size:11px!important}}
+
+/* Pilot disclosure uses an external stylesheet, compatible with our strict CSP. */
+.pilot-notice{background:#291c16;color:#ffcfab;border-bottom:1px solid #ff831f3d;padding:9px 5%;font-size:13px;text-align:center}
