@@ -11,6 +11,7 @@ import json
 from pathlib import Path
 import re
 import shutil
+import yaml
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
@@ -90,13 +91,27 @@ def build_selection(featured, published, source_release):
                 continue
             if "Apps/" + slug + "/docker-compose.yml" not in paths:
                 raise ValueError("Missing upstream application manifest: " + slug)
+            manifest_url = UPSTREAM_RAW + "/main/Apps/" + slug + "/docker-compose.yml"
+            request = Request(manifest_url, headers={"User-Agent": "mrstore-pages-sync/1.0"})
+            with urlopen(request, timeout=35) as response:
+                manifest = yaml.safe_load(response.read(500_001).decode("utf-8"))
+            meta = manifest.get("x-casaos", {}) or {}
+            def english(value, default):
+                return value.get("en_US", next(iter(value.values()), default)) if isinstance(value, dict) else default
+            icon = meta.get("icon", "")
+            thumbnail = meta.get("thumbnail", "")
             available[i] = {
                 "id": PREFIX + slug,
-                "title": slug.replace("-", " ").replace("_", " ").title(),
-                "tagline": "Aplicação disponível no repositório MrStore; publicação ZimaOS pendente.",
-                "category": "Others", "categories": ["others"],
-                "architectures": [], "version": "Não verificada",
-                "developer": "Comunidade", "editorial_only": True,
+                "title": english(meta.get("title"), slug.replace("-", " ").title()),
+                "tagline": english(meta.get("tagline"), "Aplicação selecionada para a MrStore"),
+                "category": meta.get("category", "Others"),
+                "categories": [str(meta.get("category", "Others")).lower()],
+                "architectures": meta.get("architectures", []),
+                "version": str(meta.get("version", "")),
+                "developer": meta.get("developer", "Comunidade"),
+                "icon": icon if isinstance(icon, str) else "",
+                "thumbnail": thumbnail if isinstance(thumbnail, str) else "",
+                "editorial_only": True,
             }
     if not available:
         raise ValueError("No editorial applications found upstream")
