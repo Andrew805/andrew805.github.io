@@ -70,3 +70,19 @@ jobs:
       - name: Publish to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Smoke test HTTPS homepage after deployment
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 12); do
+            if curl --location --fail --silent --show-error --max-time 20 \
+              --output /tmp/mrstore-homepage.html https://mrpiracy94.github.io/ &&
+              grep -q 'id="catalogo"' /tmp/mrstore-homepage.html; then
+              echo "Public homepage is reachable and contains the catalog interface."
+              exit 0
+            fi
+            echo "Site not ready yet (attempt $attempt/12)."
+            sleep 10
+          done
+          echo "Public homepage failed the HTTP smoke test."
+          exit 1
