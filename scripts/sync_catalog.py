@@ -80,8 +80,7 @@ def build_selection(featured, published, source_release):
 
     lookup = {a["id"]: a for a in published["apps"]}
     available = [lookup.get(PREFIX + slug) for slug in slugs]
-    if any(app is None for app in available):
-        raise ValueError("One or more pilot applications are absent from the upstream index")
+    # Publication may lag behind the editorial shortlist. Show only real entries.\n    available = [app for app in available if app is not None]\n    if not available:\n        raise ValueError("No editorial applications found in published upstream index")
 
     verified = valid_upstream_release(source_release, published)
     if verified:
